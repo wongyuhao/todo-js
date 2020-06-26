@@ -1,4 +1,4 @@
-
+import {format} from 'date-fns'
 import ProjectsDOM from '../DOM/ProjectsDOM';
 import Project from '../project';
 
@@ -21,14 +21,14 @@ const ProjectsLogic = (()=>{
 
   const createProject=()=>{
     
-    console.log("create project called")
+    
 
     
     let temp = new Project(
       document.forms["newProject"]["projTitle"].value || `My Project ${projectsList.length}`,
       document.forms["newProject"]["projDescription"].value,
       `p${projectsList.length}`,
-      Date.now()
+      format(new Date(Date.now()),'EEE, d MMM yy')
     )
 
     

@@ -1,86 +1,191 @@
 import  {createElementWithInfo, appendChildren } from './util'
-
+import Task from '../task'
 const TasksDOM =(()=>{
   const createTasksDiv = () =>{
     const div= createElementWithInfo("div","tasksDiv");
     
 
-    const info = createElementWithInfo('p',"projectInfo")
+    const taskSubheader = createElementWithInfo('div',"taskSubheader")
+
+    const btnCreateTask = createElementWithInfo("button","btnCreateTask");
+    btnCreateTask.innerHTML='<i class="fas fa-plus"></i>  Add Task';
+
+    appendChildren(
+      taskSubheader,
+      createElementWithInfo('p','subheaderText'),
+      btnCreateTask
+      )
+
     
+    taskSubheader.style.display="none"
 
     const tasksHolder = createElementWithInfo("div","tasksHolder");
 
-  appendChildren(div,info,tasksHolder);
+  appendChildren(div,taskSubheader,tasksHolder);
   return div;
   }
 
+  const addLow = (t)=>{
+    t.classList.add("low");
+    t.classList.remove("medium")
+    t.classList.remove("high")
+    t.classList.remove("none")
+  }
+
+  const addMedium = (t)=>{
+    t.classList.add("medium");
+    t.classList.remove("low")
+    t.classList.remove("high")
+    t.classList.remove("none")
+  }
+
+  const addHigh = (t)=>{
+    t.classList.add("high");
+    t.classList.remove("low")
+    t.classList.remove("medium")
+    t.classList.remove("none")
+  }
+
+  const addNone = (t)=>{
+    t.classList.add("none");
+    t.classList.remove("low")
+    t.classList.remove("medium")
+    t.classList.remove("high")
+  }
+
+  
+
+
 
   const appendTask=(task)=>{
-    console.log("appending...")
+   
     const tasksHolder = document.getElementById("tasksHolder");
     
     
     const holder = createElementWithInfo("div",task.id,"task");
   
-    
-  
-    const title = document.createElement("p");
-    title.innerHTML=`Title:${task.title}`;
-    
-    const due = document.createElement("p");
-    due.innerHTML=`Due:${task.due}`;
+    switch(task.priority){
+      case "low": 
+        addLow(holder);
+        break;
+      case "medium":
+        addMedium(holder);
+        break;
+      case "high":
+        addHigh(holder);
+        break;
+      default:
+        addNone(holder);
+    }
 
-    const priority = document.createElement("p");
-    priority.innerHTML=`Priority:${task.priority}`;
-  
-    const created = document.createElement("p");
-    created.innerHTML=`Time created: ${task.created}`
+    const Ldiv = createElementWithInfo('div',null,"tLdiv")
+    const Rdiv = createElementWithInfo('div',null,"tRdiv")
+
+
+    const title = createElementWithInfo("p",null,"taskTitle");
+    title.innerHTML=`${task.title}`;
     
+    appendChildren(Ldiv,title)
+
+    const due = createElementWithInfo("p",null,"taskDue");
+    if (task.due===""){
+      due.innerHTML=""
+    }else{
+      due.innerHTML=`Due ${task.due}`;
+    }
+
+    const checkboxDiv = createElementWithInfo("div",null,"pretty","p-default","p-round","p-smooth")   
+    const checkboxState = createElementWithInfo('div',null,"state","p-success")
+    checkboxState.innerHTML="<label></label>"
+
     const completed = document.createElement("input");
     completed.setAttribute("type","checkbox")
     completed.setAttribute("id","taskCompleted")
     completed.setAttribute("name","taskCompleted")
+    
+    
+
+    
     completed.checked=task.completed;
+    if (task.completed){
+      
+      holder.classList.add("completed")
+      
+    }else{
+      holder.classList.remove("completed")
+    
+    }
+
+    
+    
    
-    completed.addEventListener("change",function(){task.toggleComplete()})
+    completed.addEventListener("change",()=>{
+      if (task.completed){
+        task.completed = false;
+        holder.classList.remove("completed")
+      }else{
+        task.completed= true
+        holder.classList.add("completed")
+        
+      }
+    
+    })
+
+    appendChildren(checkboxDiv,completed,checkboxState)
     
     const delTask = createElementWithInfo("button",`del-${task.id}`,"taskDelete");
-    delTask.innerHTML=`delete task`;
+    delTask.innerHTML=`<i class="far fa-trash-alt">`;
   
-    
+    appendChildren(Rdiv,due,checkboxDiv,delTask)
     
   
-    appendChildren(holder,title,due,priority,created,completed,delTask);
+    appendChildren(holder,Ldiv,Rdiv);
     appendChildren(tasksHolder,holder);
   
     
   
   }
   
+  const splashPage=()=>{
+    const div = createElementWithInfo("div",null);
+    return div;
+  }
   
   
   const refreshTasks = (project)=>{
     const tasksHolder = document.getElementById("tasksHolder");
     tasksHolder.innerHTML=``;
     
+    const subheader = document.querySelector("#taskSubheader");
+    const subheaderText = document.querySelector("#subheaderText");
 
-    const info = document.querySelector("#projectInfo");
+    
+
 
     if(!project){
-      info.textContent=`select or create a project`;
+      subheader.style["display"]="none";
       return;
     }
-    info.textContent= `showing tasks for  "${project.title}"`
+    subheader.style["display"]="flex";
+    subheaderText.textContent= `${project.title}`
 
-    const btnCreateTask = createElementWithInfo("button","btnCreateTask");
-    btnCreateTask.innerHTML="Create New Task";
+    
     
     
     for(let i in project.tasksList){
-      appendTask(project.tasksList[i]);
+      if(project.tasksList[i].completed){
+        appendTask(project.tasksList[i]);
+      }
     }
 
-    tasksHolder.prepend(btnCreateTask)
+    for(let i in project.tasksList){
+      if(!project.tasksList[i].completed){
+        appendTask(project.tasksList[i]);
+      }
+    }
+
+
+    
   }
 
   const taskNew=()=>{
@@ -97,25 +202,26 @@ const TasksDOM =(()=>{
     
   
     holder.innerHTML=
-    `<p>create new task</p>
-    <form name ="newTask"  >
+    `
+    <form name ="newTask" >
 
-    <label for="taskTitle">Title:</label><br>
+    <label for="taskTitle"></label>
     <input type="text" id="taskTitle" name="taskTitle" placeholder="Task Title"><br>
 
-    <input type="date" id="taskDue" name="taskDue">
+    <input type="date" id="taskDue" name="taskDue" placeholder="Due Date">
 
     <select id="taskPriority" name="taskPriority">
+    <option value="none">None</option>
       <option value="low">Low</option>
       <option value="medium">Medium</option>
       <option value="high">High</option>
-      <option value="none">None</option>
+      
     </select> 
 
     </form>`
   
     const save = createElementWithInfo("button","taskSave");
-    save.innerHTML=`save`;
+    save.innerHTML=`<i class="far fa-save"></i>`;
   
     
   

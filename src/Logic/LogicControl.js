@@ -22,9 +22,9 @@ const LogicControl = (()=>{
   }
 
   const loadProject =(pID)=>{
-    console.log(`loading tasks of project ${pID}`);
+    
     currentProject = ProjectsLogic.getProject(pID);
-    console.log(currentProject)
+
     TasksDOM.refreshTasks(currentProject);
    
   }
@@ -32,7 +32,7 @@ const LogicControl = (()=>{
   const deleteProject = (pID)=>{
     ProjectsLogic.deleteProject(event.srcElement.id)
     currentProject = ProjectsLogic.projectsList[0]||null;
-    console.log(currentProject)
+   
     TasksDOM.refreshTasks(currentProject);
   }
 
@@ -59,9 +59,6 @@ const LogicControl = (()=>{
   const loadLocal = ()=>{
     let raw = JSON.parse(localStorage.getItem("proj"));
 
-    console.log("loading")
-    console.table(raw)
-  
     for (let i in raw){
       let temp = new Project(
           raw[i].title,
@@ -69,17 +66,27 @@ const LogicControl = (()=>{
           raw[i].id,
           raw[i].created,
           raw[i].tasksList,
-          raw[i].counter
+          raw[i].counter,
+          raw[i].complete
           )
     ProjectsLogic.projectsList.push(temp);     
     }
 
+    
     
 
     ProjectsDOM.refreshProjects(ProjectsLogic.projectsList);
 
     
   
+  }
+
+  const clearSelectedClass=()=>{
+    let projects=Array.from(document.querySelectorAll(".project"));
+
+    projects.forEach((proj)=>{
+      proj.classList.remove("selected");
+    })
   }
 
   return {
@@ -94,7 +101,9 @@ const LogicControl = (()=>{
     deleteTask,
 
     saveLocal,
-    loadLocal
+    loadLocal,
+
+    clearSelectedClass
   }
   
 })();

@@ -18,13 +18,17 @@
   },
   "homepage": "https://github.com/wongyuhao/todo-js#readme",
   "devDependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
+    "@fortawesome/free-regular-svg-icons": "^5.13.1",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
     "css-loader": "^3.6.0",
+    "file-loader": "^6.0.0",
     "style-loader": "^1.2.1",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "date-fns": "^2.14.0",
-    "lodash": "^4.17.15"
+    "pretty-checkbox": "^3.0.3"
   }
 }

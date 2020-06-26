@@ -4,14 +4,15 @@ const ProjectsDOM=(()=>{
 
 const createProjectsDiv = ()=>{
   const div= createElementWithInfo("div","projectsDiv");
+  const btnDiv = createElementWithInfo("div","btnDivCreate")
   const btnCreateProject = createElementWithInfo("button","btnCreateProject");
-  btnCreateProject.innerHTML="Create New Project";
+  btnCreateProject.innerHTML="New Project";
 
-
+  btnDiv.appendChild(btnCreateProject)
 
   const projectsHolder = createElementWithInfo("div","projectsHolder");
 
-  appendChildren(div,btnCreateProject,projectsHolder);
+  appendChildren(div,btnDiv,projectsHolder);
   return div;
 }
 
@@ -25,16 +26,17 @@ const projNew=()=>{
   
 
   holder.innerHTML=
-  `<p>create new project</p>
+  `
   <form name ="newProject"  >
-  <label for="projTitle">Title:</label><br>
-  <input type="text" id="projTitle" name="projTitle" placeholder="Project Title"><br>
-  <label for="projDescription">Description:</label><br>
+ 
+  <input type="text" id="projTitle" name="projTitle" placeholder="Project Title">
+  <label for="projTitle"></label>
   <input type="text" id="projDescription" name="projDescription" placeholder ="Description"><br>
+  <label for="projDescription"></label>
   </form>`
 
   const save = createElementWithInfo("button","projSave");
-  save.innerHTML=`save`;
+  save.innerHTML=`<i class="far fa-save"></i>`;
 
   
 
@@ -57,18 +59,18 @@ const projEdit=(project)=>{
 
   
   holder.innerHTML=
-  `<p>edit exisiting project</p>
+  `
   <form name ="editProject" >
-  <label for="projTitle">Title:</label><br>
-  <input type="text" id="projTitle" name="projTitle"><br>
-  <label for="projDescription">Description:</label><br>
-  <input type="text" id="projDescription" name="projDescription"><br>
+  <label for="projTitle"></label>
+  <input type="text" id="projTitle" name="projTitle">
+  <label for="projDescription"></label>
+  <input type="text" id="projDescription" name="projDescription" placeholder="Add a description">
   </form>`
 
   
 
   const save = createElementWithInfo("button","projSaveEdit");
-  save.innerHTML=`save edit`;
+  save.innerHTML=`<i class="far fa-save"></i>`;
 
   
 
@@ -85,30 +87,30 @@ const appendProject=(project)=>{
 
   
 
-  const title = createElementWithInfo("p",null,"projectInfo");
-  title.innerHTML=`Title:${project.title}`;
+  const title = createElementWithInfo("p",null,"projectInfo","projectTitle");
+  title.innerHTML=`${project.title}`;
   
-  const desc = createElementWithInfo("p",null,"projectInfo");
+  const desc = createElementWithInfo("p",null,"projectInfo","projectDesc");
   if(project.desc!=""){
-    desc.innerHTML = `Description: ${project.desc}`;
+    desc.innerHTML = `${project.desc}`;
   }
 
-  const created = createElementWithInfo("p",null,"projectInfo");
-  created.innerHTML=`Time created: ${project.created}`
+  const created = createElementWithInfo("p",null,"projectInfo","projectTime");
+  created.innerHTML=`${project.created}`
   
-  const tasks = createElementWithInfo("p",null,"projectInfo");
-  tasks.innerHTML=`Tasks: ${project.tasksList.length}`
+
 
   const edit = createElementWithInfo("button",`edit-${project.id}`,"projEdit");
-  edit.innerHTML=`edit project`;
+  edit.innerHTML=`<i class="far fa-edit"></i>`;
 
   const del = createElementWithInfo("button",`del-${project.id}`,"projDelete");
-  del.innerHTML=`delete project`;
+  del.innerHTML=`<i class="far fa-trash-alt"></i>`;
 
-  
-  
+  const info = createElementWithInfo("div",null,"projInfoDiv")
+  appendChildren(info,title,desc,created)
 
-  appendChildren(holder,title,desc,tasks,created,edit,del);
+
+  appendChildren(holder,info,edit,del);
   appendChildren(projectsHolder,holder);
 
   

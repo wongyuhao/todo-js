@@ -1,5 +1,5 @@
 class Task{
-  constructor(title,due,id,priority="low" ,created=Date.now(),completed=false){
+  constructor(title,due,id,priority="none" ,created,completed=false){
     
     this.title = title;
     this.due = due;
@@ -9,15 +9,6 @@ class Task{
     this.completed=completed;
   }
 
-  toggleComplete(){
-    if(this.completed){
-      console.log(`task ${this.title} set to false`)
-      this.completed=false;
-    }else{
-      console.log(`task ${this.title} set to true`)
-      this.completed=true;
-    }
-  }
 
   
 

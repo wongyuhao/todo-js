@@ -3,6 +3,16 @@ import LogicControl from './Logic/LogicControl'
 import DOMControl from './DOM/DOMControl'
 
 import './styles/project.css'
+import './styles/task.css'
+import 'pretty-checkbox/dist/pretty-checkbox.min.css'
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
+import { faEdit,faTrashAlt,faSave,faUserCircle } from "@fortawesome/free-regular-svg-icons";
+import { faCode,faPlus } from "@fortawesome/free-solid-svg-icons";
+
+
+library.add(faEdit,faTrashAlt,faSave,faUserCircle,faCode,faPlus);
+dom.watch();
+
 
 
 
@@ -22,7 +32,7 @@ createProjBtn.addEventListener("click",LogicControl.newProject)
 
 document.body.addEventListener( 'click', function ( event ) {
   if( event.srcElement.id == 'btnCreateTask' ) {
-    document.querySelector("#btnCreateTask").style["display"]="none"
+    
     LogicControl.newTask();
   };
 }
@@ -50,14 +60,16 @@ document.body.addEventListener( 'click', function ( event ) {
 );
 
 document.body.addEventListener( 'click', function ( event ) {
+  
   if( event.srcElement.classList.contains('projectClick'))
    {
-
-    console.log(`div of ${event.srcElement.id} clicked`)
-   LogicControl.loadProject(event.srcElement.id);
+    LogicControl.clearSelectedClass()
+    event.srcElement.classList.add("selected");
+    LogicControl.loadProject(event.srcElement.id);
   };
 }
 );
+
 
 document.body.addEventListener( 'click', function ( event ) {
   if( event.srcElement.className == 'projectInfo') {
@@ -70,7 +82,7 @@ document.body.addEventListener( 'click', function ( event ) {
 
 document.body.addEventListener( 'click', function ( event ) {
   if( event.srcElement.className == 'taskDelete') {
-    console.log("delete task")
+
     
       LogicControl.deleteTask((event.srcElement.id).split("-")[1]);
   };

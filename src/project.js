@@ -2,13 +2,15 @@
 
 class Project{
   
- constructor(title,description,id=null,created=Date.now(),tasksList=[],counter=0){
+ constructor(title,description,id=null,created,tasksList=[],counter=0,complete){
    this.id=id;
    this.title = title;
    this.created = created;
    this.desc = description;
    this.tasksList = tasksList;
    this.counter=counter;
+   this.complete=complete;
+
  }
 
 

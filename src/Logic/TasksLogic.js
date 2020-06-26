@@ -1,4 +1,5 @@
 import TasksDOM from "../DOM/TasksDOM";
+import {format} from 'date-fns'
 
 const { default: LogicControl } = require("./LogicControl");
 const { default: Task } = require("../task");
@@ -21,11 +22,11 @@ const TasksLogic = (()=>{
 
     
     let temp = new Task(
-      document.forms["newTask"]["taskTitle"].value || `A task`,
+      document.forms["newTask"]["taskTitle"].value || `Do something`,
       document.forms["newTask"]["taskDue"].value,
       `t${project.counter++}`,
       document.forms["newTask"]["taskPriority"].value,
-      Date.now(),
+      format(new Date(Date.now()),'EEE, d MMM yy'),
       false
     )
 
@@ -36,7 +37,7 @@ const TasksLogic = (()=>{
 
   const deleteTask =(project,tID)=>{
     
-    console.log(`deleting ${tID}`)
+
     for (let i in project.tasksList){
       if (project.tasksList[i].id==tID){
         project.tasksList.splice(i,1);

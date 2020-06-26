@@ -11,6 +11,7 @@ const DOMControl =(()=>{
     const projectsDiv = ProjectsDOM.createProjectsDiv();
     const tasksDiv = TasksDOM.createTasksDiv();
     
+    document.body.insertBefore(header,container);
     appendChildren(container, projectsDiv,tasksDiv);
     
   
@@ -19,16 +20,19 @@ const DOMControl =(()=>{
 
   const createHeaderDiv =()=>{
     const div = createElementWithInfo("div",'headerDiv');
-    div.innerHTML=`<p>This is a place holder header</p>`
+    const title = document.createElement("h1")
+    title.textContent = "ToDuit 💸"
 
-    const button = createElementWithInfo("button","savelocal");
-    button.innerHTML="save to localstorage"
+    const tagline = document.createElement("h2")
+    tagline.textContent="Get Productive, Earn Duit"
 
-    const button2 = createElementWithInfo("button","loadlocal");
-    button2.innerHTML="load from localstorage"
-
-    div.appendChild(button)
-    div.appendChild(button2)
+    const links =createElementWithInfo("ul","headerLinks")
+    const code = document.createElement("li");
+    code.innerHTML="<a href='https://www.github.com/wongyuhao/todo-js'><i class='fas fa-code'></i></a>" 
+    const about = document.createElement("li");
+    about.innerHTML="<a href='https://www.haoyudoing.com/about'><i class='far fa-user-circle'></i></a>"
+    appendChildren(links,code,about)
+    appendChildren(div,title,tagline,links)
     return div;
   }
 

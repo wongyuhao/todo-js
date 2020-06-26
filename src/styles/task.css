@@ -1,0 +1,160 @@
+#taskSubheader{
+  display:flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-items: center;
+  background-color: white;
+  height:7vh;
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.246);
+  
+ 
+}
+
+#subheaderText{
+  margin-top: 1vw;
+  padding-left: 1vw;
+  width:83%;
+  text-align: center;
+  font-size:1.4vw;
+  height: 100%;
+  font-weight: bolder;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+}
+
+#btnCreateTask{
+  background-color:black;
+  color:white;
+  cursor: pointer;
+  font-family:monospace;
+  font-weight: bolder;
+  border-style: none;
+  width: auto;
+  height:80%;
+  font-size:1vw;
+  margin-top:5px;
+  padding:0px 20px;
+  
+}
+
+#btnCreateTask:hover{
+  background-color:rgb(218, 185, 0)
+}
+.none{
+  border-left:5px solid rgb(182, 182, 182);
+}
+
+.low{
+  border-left:5px solid rgb(255, 251, 0);
+}
+
+.medium{
+  border-left:5px solid rgb(255, 166, 0);
+}
+
+.high{
+  border-left:5px solid rgb(228, 3, 3);
+}
+
+.completed{
+  border-left:8px solid rgb(51, 255, 0);
+  
+}
+
+
+.taskTitle{
+  font-size:1.3vw;
+  width:70%
+}
+
+#tasksHolder{
+
+  height:100%;
+  overflow:auto;
+  max-height: 85vh;
+}
+
+#tasksDiv{
+  grid-area:'tasksDiv';
+  height:100%;
+}
+
+
+.task input[type=text]{
+ 
+  color:black;
+  width:40vw;
+  margin-left:5px;
+  
+}
+
+.task input[type=date]{
+ 
+  color:black;
+  margin-top:12px;
+  
+}
+
+.task select{
+  margin-top:11px;
+}
+
+.task form{
+  display: flex;
+  flex-flow: row ;
+  align-items: flex-start;
+  ;
+}
+
+.task{
+  background-color:white;
+  margin:10px;
+  padding:10px;
+  border-radius: 10px;
+  box-shadow:0px 3px 4px 1px rgba(0, 0, 0, 0.246);
+  height:6.5vh;
+
+  display:flex;
+  flex-direction:row;
+  align-items: center;
+  justify-items: center;
+}
+
+
+.tLdiv{
+  width:70%;
+}
+
+.tRdiv{
+  width:30%;
+  display:flex;
+  flex-direction: row;
+ 
+  justify-content: flex-end;
+  align-items: center;
+  
+}
+#taskCompleted{
+  background-color: grey;
+}
+
+.pretty{
+  font-size: 1.5vw;
+  margin-left: 1vw;
+  padding:0;
+  margin-right:0;
+  cursor: pointer;
+}
+
+.task button{
+  background-color: white;
+  border-style:none;
+  height:3vw;
+  width:3vw;
+  padding:0;
+  font-size:1.5vw;
+  cursor: pointer;
+  color:maroon
+}
